@@ -16,3 +16,6 @@
 
 # Don't push certificates
 /cert
+
+# This diagram isn't ready yet
+diagram.drawio
