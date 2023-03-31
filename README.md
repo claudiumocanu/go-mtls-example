@@ -13,14 +13,17 @@ The goal is to cover as many scenarios as possible:
 I developed this in small increments, starting from the basics. Each milestone has a reference to the commit.
 
 
-### 1. Three simple HTTP servers
+### 1. Three simple HTTP servers [<< code](https://github.com/claudiumocanu/go-mtls-example/tree/1bb67398da6227241ea0b472b5cbc7ff2398f931)
+
 Start with 3 regular HTTP servers, each listening on a different port.
 
 - `make servers` runs main.go which laches the 3 routines, each listening on its own port on plain HTTP
 - all three can be accessed via the browser at `http://localhost:20001/hello`, `http://localhost:20002/hello`, `http://localhost:20003/hello`.
 
 
-### 2. Enable HTTPs
+### 2. Enable HTTPs [<< code](https://github.com/claudiumocanu/go-mtls-example/tree/ba97eb038e979b7409b1b9a9652e04f621d79482)  
+
+In this step the certificates are generated and loaded on bravo and charlie.
 
 #### 2.1 Generate the certificates
 First, we need to generate some certificates.
