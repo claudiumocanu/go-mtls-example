@@ -54,4 +54,9 @@ If everything worked fine, the following files should be generated under the `./
 
 #### 2.2 Listen TLS
 
-Update the code in bravo and charlie to start those two service on HTTPs.
+- update the code in bravo and charlie to start those two service on HTTPs. TODO: reference commit here
+- start the servers: `make servers`
+- access them again from the browser: to access bravo or charlie,`https://` must be explicitly typed in the browser hence they're not listening on the default `443`.
+- of course, the browser will complain, because the certificates presented by the services are not signed by a trusted authority; these were self-signed with a CA that was self-generated in the previous step. The self-generated CA can be trusted in the operating system or the browser if needed.
+
+

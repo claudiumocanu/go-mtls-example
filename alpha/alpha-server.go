@@ -14,6 +14,6 @@ func hello(w http.ResponseWriter, req *http.Request) {
 func StartServer() {
 	alphaMux := http.NewServeMux()
 	alphaMux.HandleFunc("/hello", hello)
-	fmt.Println("alpha starting HTTP listener on port", PORT)
+	fmt.Printf("alpha started: http://localhost%s/hello\n", PORT)
 	http.ListenAndServe(PORT, alphaMux)
 }

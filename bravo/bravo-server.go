@@ -14,6 +14,9 @@ func hello(w http.ResponseWriter, req *http.Request) {
 func StartServer() {
 	bravoMux := http.NewServeMux()
 	bravoMux.HandleFunc("/hello", hello)
-	fmt.Println("bravo starting HTTP listener on port", PORT)
-	http.ListenAndServe(PORT, bravoMux)
+	fmt.Printf("bravo started: https://localhost%s/hello\n", PORT)
+	err := http.ListenAndServeTLS(PORT, "cert/bravo.crt", "cert/bravo.key", bravoMux)
+	if err != nil {
+		panic("ListenAndServe: " + err.Error())
+	}
 }
