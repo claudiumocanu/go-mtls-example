@@ -63,3 +63,38 @@ If everything worked fine, the following files should be generated under the `./
 - of course, the browser will complain, because the certificates presented by the services are not signed by a trusted authority; these were self-signed with a CA that was self-generated in the previous step. The self-generated CA can be trusted in the operating system or the browser if needed.
 
 
+### 3. Create clients
+
+In this step, 6 clients are implemented: two in each service, to communicate with the other two services.  
+To make testing easier, two more handlers are created in each service:
+
+Alpha:
+- `GET` `http://localhost:20001/ping-bravo` attempts to perform a `GET` on `https://localhost:20002/hello`
+- `GET` `http://localhost:20001/ping-charlie` attempts to perform a `GET` on `https://localhost:20003/hello`
+
+Bravo:
+- `GET` `http://localhost:20002/ping-alpha` attempts to perform a `GET` on `http://localhost:20001/hello`
+- `GET` `http://localhost:20002/ping-charlie` attempts to perform a `GET` on `https://localhost:20003/hello`
+
+Charlie:
+- `GET` `http://localhost:20003/ping-alpha` attempts to perform a `GET` on `http://localhost:20001/hello`
+- `GET` `http://localhost:20003/ping-bravo` attempts to perform a `GET` on `https://localhost:20002/hello`
+
+Again, will do this in two steps, to understand the mechanics of HTTP and HTTPS from a go client perspective.
+
+#### 3.1 Clients without certificate trusts
+
+In this phase, none of the clients loads any CA or trusted certificate and the behavior is very similar to a web-browser client:
+- all the `pings` that have as target the alpha service succeed, because alpha is listening on plain HTTP and there is nothing to verity
+- all the pings that have as target the bravo or charlie service fail with _tls: failed to verify certificate: x509_, because bravo and charlie present untrusted certificates
+
+There is a quick fix that may be used **for testing purposes only**, but never in production: setting the clients in insecure mode:
+
+```go
+c := http.Client{}
+	c.Transport = &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+```
+This is quite equivalent with _Accepting the risk from the web browser client_
+
