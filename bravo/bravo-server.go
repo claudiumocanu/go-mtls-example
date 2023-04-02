@@ -3,9 +3,9 @@ package bravo
 import (
 	"fmt"
 	"net/http"
-)
 
-const PORT = ":20002"
+	"github.com/claudiumocanu/go-mtls-example/common"
+)
 
 func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "hello from bravo\n")
@@ -14,9 +14,15 @@ func hello(w http.ResponseWriter, req *http.Request) {
 func StartServer() {
 	bravoMux := http.NewServeMux()
 	bravoMux.HandleFunc("/hello", hello)
-	fmt.Printf("bravo started: https://localhost%s/hello\n", PORT)
-	err := http.ListenAndServeTLS(PORT, "cert/bravo.crt", "cert/bravo.key", bravoMux)
-	if err != nil {
+	fmt.Printf("bravo server reachable at: https://%s%s/hello\n",
+		common.BaseUrl, common.BravoServerPort)
+
+	if err := http.ListenAndServeTLS(
+		common.BravoServerPort,
+		"cert/bravo.crt",
+		"cert/bravo.key",
+		bravoMux,
+	); err != nil {
 		panic("ListenAndServe: " + err.Error())
 	}
 }
