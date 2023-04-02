@@ -82,7 +82,7 @@ Charlie:
 
 Again, will do this in two steps, to understand the mechanics of HTTP and HTTPS from a go client perspective.
 
-#### 3.1 Clients without certificate trusts
+#### 3.1 Clients without certificate trusts [<<code](https://github.com/claudiumocanu/go-mtls-example/tree/81c2d03ee6b424279d4dd6d699b016701aaa8e03)
 
 In this phase, none of the clients loads any CA or trusted certificate and the behavior is very similar to a web-browser client:
 - all the `pings` that have as target the alpha service succeed, because alpha is listening on plain HTTP and there is nothing to verity
